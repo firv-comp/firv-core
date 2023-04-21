@@ -1,0 +1,9 @@
+[target.riscv64gc-unknown-none-elf]
+rustflags = [
+    "-Clink-arg=-Tres/rv64-virt/rust-link.ld",   # Linker script
+]
+runner = "qemu-system-riscv64 -machine virt -nographic -bios none -kernel "
+
+[build]
+target = "riscv64gc-unknown-none-elf"    # Select target (valid targets can be found by "rustup target list")
+
