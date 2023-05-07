@@ -47,7 +47,6 @@ int gcd(int a, int b) {
     return gcd(b, a % b);
 }
 
-
 int main() {
     print("Hello RISC-V!\n");
 

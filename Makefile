@@ -23,3 +23,8 @@ c-kernel:
 	riscv64-unknown-elf-as $(ASFLAGS) -I$(AS_INCLUDE) -g -o entry.o res/entry.s 
 	riscv64-unknown-elf-gcc $(CCFLAGS) -static -nostdlib -ffreestanding -c -o cker.o src/cker.c 
 	riscv64-unknown-elf-ld $(LDFLAGS) -T $(LDSDIR)/c-link.ld entry.o cker.o -o cker.elf
+
+KERNEL=code.elf
+.PHONY: run
+run:
+	qemu-system-riscv64 -machine virt -nographic  -bios none -kernel $(KERNEL)
