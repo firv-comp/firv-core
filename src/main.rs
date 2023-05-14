@@ -21,13 +21,13 @@ unsafe fn mmio_write<T>(addr: usize, value: T) {
     reg.write_volatile(value);
 }
 
-fn exit() {
+fn SWexit() {
     unsafe {
         mmio_write(SYSCON, SHUTDOWN as u32)
     }
 }
 
-fn print(s: &str) -> () {
+fn SWprint(s: &str) -> () {
     for c in s.bytes() {
         unsafe{
             mmio_write(UART, c as u8);
@@ -38,6 +38,6 @@ fn print(s: &str) -> () {
 /// Main program function
 #[no_mangle]
 extern "C" fn main() -> () {
-    print("Hello World!\n");
-    exit();
+    SWprint("Hello World!\n");
+    SWexit();
 }
