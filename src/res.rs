@@ -1,7 +1,10 @@
 #![no_std]
 #![no_main]
 
-use core::{arch::global_asm, panic::PanicInfo};
+use core::{
+    arch::global_asm,
+    panic::PanicInfo,
+};
 
 global_asm!(include_str!("../res/entry.s"));
 
@@ -11,22 +14,14 @@ fn panic(_info: &PanicInfo) -> ! {
     loop {}
 }
 
-enum Reason {
-    FI
-}
-
-fn SW_f(a: i32, b: i32) -> Result<i32, Reason> {
+fn sw_f(a: i32, b: i32) -> i32 {
     let x = a + b;
-    let y = a + b;
+    let y = a - b;
 
-    if x != y {
-        return Err(Reason::FI);
-    }
-
-    return Ok(x);
+    return x * y;
 }
 
 #[no_mangle]
 extern "C" fn main() -> () {
-    SW_f(40, 2);
+    sw_f(40, 2);
 }

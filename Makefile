@@ -28,3 +28,9 @@ KERNEL=code.elf
 .PHONY: run
 run:
 	qemu-system-riscv64 -machine virt -nographic  -bios none -kernel $(KERNEL)
+
+SRC=src/res.rs
+RUSTTARGET=riscv64gc-unknown-none-elf
+.PHONY: emit-ll
+emit-ll:
+	rustc $(SRC) --emit llvm-ir --target $(RUSTTARGET)

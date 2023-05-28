@@ -2,6 +2,7 @@
 *.out
 *.o
 
+*.ll
 
 # Added by cargo
 /target
