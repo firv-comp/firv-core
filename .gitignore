@@ -3,6 +3,6 @@
 *.o
 
 *.ll
-
+*.zip
 # Added by cargo
 /target
