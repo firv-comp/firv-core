@@ -35,6 +35,7 @@ run:
 
 SRC=src/res.rs
 RUSTTARGET=riscv64gc-unknown-none-elf
+RUSTTARGET=riscv32imac-unknown-none-elf
 .PHONY: emit-ll
 emit-ll:
 	rustc $(SRC) --emit llvm-ir -Cpanic=abort -Coverflow-checks=off --target $(RUSTTARGET)

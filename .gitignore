@@ -6,3 +6,5 @@
 *.zip
 # Added by cargo
 /target
+
+!src/*
