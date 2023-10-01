@@ -9,8 +9,8 @@ clean:
 MACHINE=rv64-virt
 AS_INCLUDE=res/$(MACHINE)/
 LDSDIR=res/$(MACHINE)
-ASFLAGS=-march=rv64ig
-CCFLAGS=-march=rv64ig -mabi=lp64 -mcmodel=medany
+ASFLAGS=-march=rv64imac
+CCFLAGS=-march=rv64imac -mabi=lp64 -mcmodel=medany
 LDFLAGS=
 
 ASM_SRC=src/asker.s
@@ -33,12 +33,25 @@ KERNEL=code.elf
 run:
 	qemu-system-riscv64 -machine virt -nographic  -bios none -kernel $(KERNEL)
 
+RUSTC=rustc
 SRC=src/res.rs
+OUTDIR=build
 RUSTTARGET=riscv64gc-unknown-none-elf
-RUSTTARGET=riscv32imac-unknown-none-elf
+# RUSTTARGET=riscv32imac-unknown-none-elf
 .PHONY: emit-ll
 emit-ll:
-	rustc $(SRC) --emit llvm-ir -Cpanic=abort -Coverflow-checks=off --target $(RUSTTARGET)
+	$(RUSTC) $(SRC) --emit llvm-ir --out-dir $(OUTDIR) \
+		--target $(RUSTTARGET) \
+		-Cpanic=abort -Coverflow-checks=off
+
+RUST-LLD=rust-lld
+RUST-LDSCRIPT=res/rv64-virt/rust-link.ld
+.PHONY: build-rust
+build-rust:
+	$(RUSTC) $(SRC) --o $(OUTDIR)/rustker.elf \
+		--target $(RUSTTARGET) \
+		-Clinker=$(RUST-LLD) -Clink-arg=-T$(RUST-LDSCRIPT) \
+		-Cpanic=abort -Coverflow-checks=off
 
 bundle-tests: src/res.rs res.ll res-firv.s
 	zip $@.zip $^
