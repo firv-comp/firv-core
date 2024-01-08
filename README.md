@@ -82,3 +82,13 @@ make rust-ll \
     RUSTC=../firv-rust/build/host/stage1/bin/rustc \
     SRC=src/harden.rs
 ```
+
+### Emit RISC-V ASM
+
+Emit the RISC-V assembly
+
+```
+make rust-asm \
+    RUSTC=../firv-rust/build/host/stage1/bin/rustc \
+    SRC=src/harden.rs
+```

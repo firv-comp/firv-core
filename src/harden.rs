@@ -39,6 +39,8 @@ fn putc(c: char) -> () {
 }
 
 #[firv_harden]
+#[no_mangle]
+extern "C"
 fn sw_f(a: i32, b: i32) -> i32 {
     let x = a + b;
     let y = a - b;
