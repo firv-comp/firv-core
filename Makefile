@@ -83,15 +83,14 @@ rust-ll:
 rust-asm:
 	$(RUSTC) $(SRC) --emit asm --out-dir $(OUTDIR) \
 		--target $(RUSTTARGET) \
-		-Cpanic=abort -Coverflow-checks=off
+		-O -Cpanic=abort -Coverflow-checks=off
 
 # Build kernel
 RUST-LLD=riscv64-unknown-elf-ld
 RUST-LDSCRIPT=res/rv64-virt/rust-link.ld
 .PHONY: rust-kernel
 rust-kernel:
-	$(RUSTC) $(SRC) --o $(OUTDIR)/rustker.elf \
+	$(RUSTC) $(SRC) --o $(OUTDIR)/$(basename $(notdir $(SRC))).elf \
 		--target $(RUSTTARGET) \
 		-Clinker=$(RUST-LLD) -Clink-arg=-T$(RUST-LDSCRIPT) \
-		-Cpanic=abort -Coverflow-checks=off
-
+		-O -Cpanic=abort -Coverflow-checks=off
