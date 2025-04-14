@@ -1,5 +1,8 @@
 # firv-core
 
+## TLDR
+
+
 ## Prerequisites
 
 * `git`
@@ -59,7 +62,9 @@ make asm-kernel \
     ASM_OBJ=firv.o \
     ASM_OUT=firv.elf 
 ```
-## Rust commands
+## Compile Rust 
+
+**This section requires the [firv-rust](https://github.com/firv-comp/firv-rust) component.**
 
 The rust-related commands default to usage of `rustc`, in case of using the `firv-rust`, specify the `RUSTC` parameter, e.g. `RUSTC=../firv-rust/build/host/stage1/bin/rustc`
 
@@ -91,4 +96,16 @@ Emit the RISC-V assembly
 make rust-asm \
     RUSTC=../firv-rust/build/host/stage1/bin/rustc \
     SRC=src/harden.rs
+
+
+## Compiling LLVM IR (standalone)
+
+** This section requires [firv-llvm-project](https://github.com/firv-comp/firv-llvm-project) component **
+
+### Build LLVM to ASM
+
+```
+make llvm-asm \
+    LLC=../firv-llvm-project/build/bin/llc
+    LL_SRC=src/firv.ll
 ```

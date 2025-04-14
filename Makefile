@@ -94,3 +94,15 @@ rust-kernel:
 		--target $(RUSTTARGET) \
 		-Clinker=$(RUST-LLD) -Clink-arg=-T$(RUST-LDSCRIPT) \
 		-O -Cpanic=abort -Coverflow-checks=off
+
+
+#-------------------------------------------
+# LLVM
+#-------------------------------------------
+
+LLC=llc
+LL_SRC=src/firv.ll
+LL_OUT=$(OUTDIR)/$(basename $(notdir $(LL_SRC))).s
+.PHONY: llvm-asm
+llvm-asm:
+	echo $(LLC) $(LL_SRC) -o $(LL_OUT)
